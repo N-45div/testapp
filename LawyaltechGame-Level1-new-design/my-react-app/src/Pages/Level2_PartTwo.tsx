@@ -1,14 +1,14 @@
 import { FaPenToSquare } from "react-icons/fa6";
 import { TbSettingsMinus, TbSettingsPlus } from "react-icons/tb";
 import { ImLoop2 } from "react-icons/im";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, ReactElement } from "react";
 import Navbar from "../components/Navbar";
 import { useHighlightedText } from "../context/HighlightedTextContext";
 import EmploymentAgreement from "../utils/EmploymentAgreement";
 
 // Define types for the icons
 interface IconItem {
-  icon: JSX.Element;
+  icon: ReactElement;
   label: string;
 }
 
@@ -27,7 +27,6 @@ const LevelTwoPart_Two = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const { highlightedTexts, addHighlightedText } = useHighlightedText();
   const contentRef = useRef("");
-  // Fix for error #1: Type 'number' is not assignable to type 'null'
   const debounceTimerRef = useRef<number | null>(null);
   
   const extractContent = () => {
@@ -182,7 +181,6 @@ const LevelTwoPart_Two = () => {
     };
   }, []);
 
-  // Fix for error #2: Parameter 'label' implicitly has an 'any' type
   const handleIconClick = (label: string) => {
     const selection = window.getSelection();
     if (!selection || !selection.rangeCount) return;
@@ -246,7 +244,6 @@ const LevelTwoPart_Two = () => {
               className="p-2 rounded-full bg-lime-300 hover:bg-lime-400 transition-colors duration-200 flex items-center justify-center text-3xl"
               onMouseEnter={() => setTooltip(label)}
               onMouseLeave={() => setTooltip(null)}
-              // Fix for error #3: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'
               onClick={() => handleIconClick(label)}
             >
               {icon}
