@@ -3,7 +3,6 @@ import HomePage from "./Pages/HomePage";
 import LevelOneQuizPage from "./Pages/LevelOneQuizPage";
 import Level2 from "./Pages/LevelTwo";
 import LevelTwoPart_Two from "./Pages/Level2_PartTwo";
-import LevelOneDesign from "./Pages/Level1_newDesign";
 import Questionnaire from "./Pages/Questionnaire";
 import Live_Generation from "./Pages/Live_Generation";
 // import Live_Generation_2 from "./Pages/Live_Generation_2";
