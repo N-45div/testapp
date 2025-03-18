@@ -6,7 +6,13 @@ import Navbar from "../components/Navbar";
 import { useHighlightedText } from "../context/HighlightedTextContext";
 import EmploymentAgreement from "../utils/EmploymentAgreement";
 
-const icons = [
+// Define types for the icons
+interface IconItem {
+  icon: JSX.Element;
+  label: string;
+}
+
+const icons: IconItem[] = [
   { icon: <FaPenToSquare />, label: "Edit PlaceHolder" },
   { icon: <TbSettingsMinus />, label: "Small Condition" },
   { icon: <TbSettingsPlus />, label: "Big Condition" },
@@ -16,12 +22,13 @@ const icons = [
 const GEMINI_API_KEY = import.meta.env;
 
 const LevelTwoPart_Two = () => {
-  const [tooltip, setTooltip] = useState(null);
+  const [tooltip, setTooltip] = useState<string | null>(null);
   const [feedback, setFeedback] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const { highlightedTexts, addHighlightedText } = useHighlightedText();
   const contentRef = useRef("");
-  const debounceTimerRef = useRef(null);
+  // Fix for error #1: Type 'number' is not assignable to type 'null'
+  const debounceTimerRef = useRef<number | null>(null);
   
   const extractContent = () => {
     const content = document.body.innerText || "";
@@ -122,13 +129,13 @@ const LevelTwoPart_Two = () => {
   };
   
   const debouncedAnalyzeContent = () => {
-    if (debounceTimerRef.current) {
+    if (debounceTimerRef.current !== null) {
       clearTimeout(debounceTimerRef.current);
     }
     
     debounceTimerRef.current = setTimeout(() => {
       analyzeContent();
-    }, 2000); // 2 second debounce
+    }, 2000) as unknown as number; // 2 second debounce
   };
 
   const setupObserver = () => {
@@ -169,13 +176,14 @@ const LevelTwoPart_Two = () => {
       if (observer) {
         observer.disconnect();
       }
-      if (debounceTimerRef.current) {
+      if (debounceTimerRef.current !== null) {
         clearTimeout(debounceTimerRef.current);
       }
     };
   }, []);
 
-  const handleIconClick = (label) => {
+  // Fix for error #2: Parameter 'label' implicitly has an 'any' type
+  const handleIconClick = (label: string) => {
     const selection = window.getSelection();
     if (!selection || !selection.rangeCount) return;
 
@@ -238,6 +246,7 @@ const LevelTwoPart_Two = () => {
               className="p-2 rounded-full bg-lime-300 hover:bg-lime-400 transition-colors duration-200 flex items-center justify-center text-3xl"
               onMouseEnter={() => setTooltip(label)}
               onMouseLeave={() => setTooltip(null)}
+              // Fix for error #3: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'
               onClick={() => handleIconClick(label)}
             >
               {icon}
