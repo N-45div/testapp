@@ -19,7 +19,7 @@ const icons: IconItem[] = [
   { icon: <ImLoop2 />, label: "Loop" },
 ];
 
-const GEMINI_API_KEY = import.meta.env.GEMINI_API_KEY;
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const LevelTwoPart_Two = () => {
   const [tooltip, setTooltip] = useState<string | null>(null);
